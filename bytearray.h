@@ -31,6 +31,7 @@ ByteArray* move_file_into_byte_array(char* filename){
 	b->buf = malloc(b->filesize * sizeof(uint8_t));
     if (!b->buf){
         printf("ERROR: MEMORY COULD NOT BE ALLOCATED\n");
+        fclose(f);
         return NULL;
     }
     fread(b->buf, 1, b->filesize, f);
