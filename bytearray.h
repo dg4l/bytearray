@@ -14,6 +14,7 @@ size_t get_file_size(FILE* f){
     fstat(fd, &stats);
     return stats.st_size;
 }
+
 void cleanup_bytearray(ByteArray **ba){
 	free((*ba)->buf);
 	free(*ba);
