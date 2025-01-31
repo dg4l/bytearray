@@ -30,6 +30,13 @@ void cleanup_bytearray(ByteArray **ba){
     *ba = NULL;
 }
 
+ByteArray* create_empty_byte_array(size_t size){
+    ByteArray* b = malloc(sizeof(ByteArray));
+    b->bufsize = size;
+    b->buf = calloc(b->bufsize, 1);
+    return b;
+}
+
 bool byte_array_to_file(ByteArray* ba, char* filename){
     FILE* fp = fopen(filename, "wb");
     if (!fp) return 0;
