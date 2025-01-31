@@ -32,8 +32,14 @@ void cleanup_bytearray(ByteArray **ba){
 
 ByteArray* create_empty_byte_array(size_t size){
     ByteArray* b = malloc(sizeof(ByteArray));
+    if (!b){
+        return NULL;
+    }
     b->bufsize = size;
     b->buf = calloc(b->bufsize, 1);
+    if (!b->buf){
+        return NULL;
+    }
     return b;
 }
 
@@ -50,13 +56,7 @@ ByteArray* file_to_byte_array(char* filename){
     if (!f){
         return NULL;
     }
-    ByteArray* b = malloc(sizeof(ByteArray));
-    b->bufsize = get_file_size(f);
-    b->buf = malloc(b->bufsize * sizeof(uint8_t));
-    if (!b->buf){
-        fclose(f);
-        return NULL;
-    }
+    ByteArray* b = create_empty_byte_array(get_file_size(f));
     fread(b->buf, 1, b->bufsize, f);
     fclose(f);
     return b;
