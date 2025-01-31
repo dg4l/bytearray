@@ -4,8 +4,8 @@
 #include <stdint.h>
 
 typedef struct{
-	uint8_t* buf;
-	size_t filesize;
+    uint8_t* buf;
+    size_t filesize;
 }ByteArray; 
 
 size_t get_file_size(FILE* f){
@@ -16,9 +16,9 @@ size_t get_file_size(FILE* f){
 }
 
 void cleanup_bytearray(ByteArray **ba){
-	free((*ba)->buf);
-	free(*ba);
-	*ba = NULL;
+    free((*ba)->buf);
+    free(*ba);
+    *ba = NULL;
 }
 
 ByteArray* move_file_into_byte_array(char* filename){
@@ -27,9 +27,9 @@ ByteArray* move_file_into_byte_array(char* filename){
         printf("ERROR: FILE NOT FOUND\n");  
         return NULL;
     }
-	ByteArray* b = malloc(sizeof(ByteArray));
+    ByteArray* b = malloc(sizeof(ByteArray));
     b->filesize = get_file_size(f);
-	b->buf = malloc(b->filesize * sizeof(uint8_t));
+    b->buf = malloc(b->filesize * sizeof(uint8_t));
     if (!b->buf){
         printf("ERROR: MEMORY COULD NOT BE ALLOCATED\n");
         fclose(f);
