@@ -1,6 +1,14 @@
 ## bytearray.h
 Simple and hackable single header library for working with binaries.
 
+## Definition of a ByteArray:
+```c
+typedef struct{
+    uint8_t* buf;
+    size_t bufsize;
+}ByteArray; 
+```
+
 ## Example of reading and writing back a file:
 ```c
 #include "bytearray/bytearray.h"
