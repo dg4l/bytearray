@@ -15,6 +15,13 @@ size_t get_file_size(FILE* f){
     return stats.st_size;
 }
 
+void print_byte_array(ByteArray* ba){
+    for (int i = 0; i < ba->filesize; ++i){
+        if (!(i % 16)) printf("\n");
+        printf("%02X ", ba->buf[i]);
+    }
+}
+
 void cleanup_bytearray(ByteArray **ba){
     free((*ba)->buf);
     free(*ba);
