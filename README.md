@@ -1,5 +1,13 @@
 ## bytearray.h
 Single header library that makes working with binary data less painful. 
+
+## Example of reading and writing back a file:
 ```c
-#include "bytearray.h"
+#include "bytearray/bytearray.h"
+
+int main(void){
+    ByteArray* filedata = file_to_byte_array("./Pikmin (USA) (v1.01).iso");
+    byte_array_to_file(filedata, "./Pikmin (USA) (v1.01).iso");
+    cleanup_bytearray(&filedata);
+}
 ```
