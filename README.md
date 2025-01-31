@@ -1,5 +1,5 @@
 ## bytearray.h
-Simple and hackable single header library which makes working with binary data less painful
+Simple and hackable single header library for working with binaries.
 
 ## Example of reading and writing back a file:
 ```c
