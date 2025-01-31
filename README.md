@@ -2,7 +2,7 @@
 Simple and hackable single header library which makes working with binary data less painful
 
 ## Example of reading and writing back a file:
-``c
+```c
 #include "bytearray/bytearray.h"
 
 int main(void){
