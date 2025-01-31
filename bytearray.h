@@ -41,14 +41,12 @@ bool byte_array_to_file(ByteArray* ba, char* filename){
 ByteArray* file_to_byte_array(char* filename){
     FILE* f = fopen(filename, "rb");
     if (!f){
-        printf("ERROR: FILE NOT FOUND\n");  
         return NULL;
     }
     ByteArray* b = malloc(sizeof(ByteArray));
     b->bufsize = get_file_size(f);
     b->buf = malloc(b->bufsize * sizeof(uint8_t));
     if (!b->buf){
-        printf("ERROR: MEMORY COULD NOT BE ALLOCATED\n");
         fclose(f);
         return NULL;
     }
