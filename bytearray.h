@@ -11,27 +11,44 @@ typedef struct{
     size_t bufsize;
 }ByteArray; 
 
-size_t get_file_size(FILE* f){
+/*                          API                                 */
+/* ------------------------------------------------------------ */
+
+static size_t get_file_size(FILE* f);
+
+static void print_byte_array(ByteArray* ba);
+
+static void cleanup_bytearray(ByteArray **ba);
+
+static ByteArray* create_empty_byte_array(size_t size);
+
+static bool byte_array_to_file(ByteArray* ba, char* filename);
+
+static ByteArray* file_to_byte_array(char* filename);
+
+/* -------------------------------------------------------------- */
+
+static size_t get_file_size(FILE* f){
     struct stat stats;
     int fd = fileno(f); 
     fstat(fd, &stats);
     return stats.st_size;
 }
 
-void print_byte_array(ByteArray* ba){
+static void print_byte_array(ByteArray* ba){
     for (int i = 0; i < ba->bufsize; ++i){
         if (!(i % 16)) printf("\n");
         printf("%02X ", ba->buf[i]);
     }
 }
 
-void cleanup_bytearray(ByteArray **ba){
+static void cleanup_bytearray(ByteArray **ba){
     free((*ba)->buf);
     free(*ba);
     *ba = NULL;
 }
 
-ByteArray* create_empty_byte_array(size_t size){
+static ByteArray* create_empty_byte_array(size_t size){
     ByteArray* b = malloc(sizeof(ByteArray));
     if (!b){
         return NULL;
@@ -44,7 +61,7 @@ ByteArray* create_empty_byte_array(size_t size){
     return b;
 }
 
-bool byte_array_to_file(ByteArray* ba, char* filename){
+static bool byte_array_to_file(ByteArray* ba, char* filename){
     FILE* fp = fopen(filename, "wb");
     if (!fp) return 0;
     fwrite(ba->buf, 1, ba->bufsize, fp);
@@ -52,7 +69,7 @@ bool byte_array_to_file(ByteArray* ba, char* filename){
     return 1;
 }
 
-ByteArray* file_to_byte_array(char* filename){
+static ByteArray* file_to_byte_array(char* filename){
     FILE* f = fopen(filename, "rb");
     if (!f){
         return NULL;
