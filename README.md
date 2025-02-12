@@ -9,14 +9,21 @@ typedef struct{
 }ByteArray; 
 ```
 
-## Example of reading and writing back a file:
+## Example of file I/O and error handling:
 ```c
 #include "bytearray/bytearray.h"
 
 int main(void){
     char* filename = "example_file.bin";
     ByteArray* filedata = file_to_byte_array(filename);
-    byte_array_to_file(filedata, filename);
+    if (!filedata){
+        printf("Read Error!\n");
+        return -1;
+    }
+    if (!byte_array_to_file(filedata, filename)){
+        printf("Write Error!\n");
+        return -1;
+    }
     cleanup_bytearray(&filedata);
 }
 ```
