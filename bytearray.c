@@ -1,5 +1,20 @@
 #include "bytearray.h"
 
+ByteArray* insert_zeroes(size_t pos, size_t amt, ByteArray* ba){
+    ByteArray* tmp = create_empty_byte_array(ba->bufsize + amt);
+    size_t i;
+    for (i = 0; i < pos; ++i){
+        tmp->buf[i] = ba->buf[i];
+    }
+    for (i = 0; i < amt; ++i){
+        tmp->buf[pos + i] = 0;
+    }
+    for (i = 0; i < ba->bufsize - pos; ++i){
+        tmp->buf[pos + amt + i] = ba->buf[pos + i];
+    }
+    return tmp;
+}
+
 size_t get_file_size(FILE* f){
     struct stat stats;
     int fd = fileno(f); 
