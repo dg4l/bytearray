@@ -27,6 +27,7 @@ void print_byte_array(ByteArray* ba){
         if (!(i % 16)) printf("\n");
         printf("%02X ", ba->buf[i]);
     }
+    printf("\n");
 }
 
 void cleanup_bytearray(ByteArray **ba){
