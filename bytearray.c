@@ -12,6 +12,7 @@ ByteArray* insert_zeroes(size_t pos, size_t amt, ByteArray* ba){
     for (i = 0; i < ba->bufsize - pos; ++i){
         tmp->buf[pos + amt + i] = ba->buf[pos + i];
     }
+    cleanup_bytearray(&ba);
     return tmp;
 }
 
