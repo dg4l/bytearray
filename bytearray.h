@@ -26,7 +26,7 @@ bool byte_array_to_file(ByteArray* ba, char* filename);
 
 ByteArray* file_to_byte_array(char* filename);
 
-ByteArray* insert_zeroes(size_t pos, size_t amt, ByteArray* ba);
+void insert_zeroes(size_t pos, size_t amt, ByteArray** ba);
 
 /* -------------------------------------------------------------- */
 
