@@ -2,7 +2,6 @@
 
 void insert_zeroes(size_t pos, size_t amt, ByteArray** ba){
     ByteArray* tmp = create_empty_byte_array((*ba)->bufsize + amt);
-    size_t i;
     memcpy(tmp->buf, (*ba)->buf, pos);
     memset(&tmp->buf[pos], 0, amt);
     memcpy(&tmp->buf[pos + amt], &(*ba)->buf[pos], (*ba)->bufsize - pos);
@@ -18,7 +17,7 @@ size_t get_file_size(FILE* f){
 }
 
 void print_byte_array(ByteArray* ba){
-    for (int i = 0; i < ba->bufsize; ++i){
+    for (size_t i = 0; i < ba->bufsize; ++i){
         if (!(i % 16)) printf("\n");
         printf("%02X ", ba->buf[i]);
     }
@@ -39,6 +38,7 @@ ByteArray* create_empty_byte_array(size_t size){
     b->bufsize = size;
     b->buf = calloc(b->bufsize, 1);
     if (!b->buf){
+        free(b);
         return NULL;
     }
     return b;
