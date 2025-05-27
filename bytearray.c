@@ -24,7 +24,7 @@ void print_byte_array(ByteArray* ba){
     printf("\n");
 }
 
-void cleanup_bytearray(ByteArray **ba){
+void cleanup_bytearray(ByteArray** ba){
     free((*ba)->buf);
     free(*ba);
     *ba = NULL;
