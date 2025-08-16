@@ -23,9 +23,11 @@ void cleanup_bytearray(ByteArray **ba);
 
 ByteArray* create_empty_byte_array(size_t size);
 
-bool byte_array_to_file(ByteArray* ba, char* filename);
+ByteArray* clone_byte_array(ByteArray* ba);
 
 ByteArray* file_to_byte_array(char* filename);
+
+bool byte_array_to_file(ByteArray* ba, char* filename);
 
 void insert_zeroes(size_t pos, size_t amt, ByteArray** ba);
 

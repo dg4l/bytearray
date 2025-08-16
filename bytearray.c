@@ -30,6 +30,15 @@ void cleanup_bytearray(ByteArray **ba){
     *ba = NULL;
 }
 
+ByteArray* clone_byte_array(ByteArray* ba){
+    ByteArray* ret = create_empty_byte_array(ba->bufsize);
+    if (!ret){
+        return NULL;
+    }
+    memcpy(ret->buf, ba->buf, ba->bufsize);
+    return ret;
+}
+
 ByteArray* create_empty_byte_array(size_t size){
     ByteArray* b = malloc(sizeof(ByteArray));
     if (!b){
