@@ -5,7 +5,7 @@ Simple and hackable single header library for working with binaries.
 ```c
 typedef struct{
     uint8_t* buf;
-    size_t bufsize;
+    size_t size;
 }ByteArray; 
 ```
 
