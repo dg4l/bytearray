@@ -7,10 +7,10 @@
 #include <stdbool.h>
 #include <unistd.h>
 
-typedef struct{
+typedef struct {
     uint8_t* buf;
     size_t size;
-}ByteArray; 
+} ByteArray; 
 
 /*                          API                                 */
 /* ------------------------------------------------------------ */
@@ -29,7 +29,7 @@ ByteArray* file_to_byte_array(char* filename);
 
 bool byte_array_to_file(ByteArray* ba, char* filename);
 
-void insert_zeroes(size_t pos, size_t amt, ByteArray** ba);
+bool insert_zeroes(size_t pos, size_t amt, ByteArray** ba);
 
 /* -------------------------------------------------------------- */
 
