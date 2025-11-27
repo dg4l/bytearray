@@ -34,6 +34,7 @@ void cleanup_bytearray(ByteArray** ba) {
 }
 
 ByteArray* clone_byte_array(ByteArray* ba) {
+    if (!ba) return NULL;
     ByteArray* ret = create_empty_byte_array(ba->size);
     if (!ret) {
         return NULL;
