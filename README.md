@@ -18,12 +18,13 @@ int main(void){
     ByteArray* filedata = file_to_byte_array(filename);
     if (!filedata){
         printf("Read Error!\n");
-        return -1;
+        return 1;
     }
     if (!byte_array_to_file(filedata, filename)){
         printf("Write Error!\n");
-        return -1;
+        return 1;
     }
     cleanup_bytearray(&filedata);
+    return 0;
 }
 ```
