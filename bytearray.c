@@ -1,12 +1,23 @@
 #include "bytearray.h"
 
+// recent changes (as of 2025-11-27) have
+// slightly changed the way this library handles errors.
+// I decided that rather than just leaving it up to the
+// user of this library to figure out what the problem is
+// I have decided to include some more early returns,
+// so that when you have an issue, you can place a breakpoint
+// on the function that is giving you trouble, and see exactly where
+// something went wrong, this is especially helpful when multiple things
+// could go wrong.
+
 bool insert_zeroes(size_t pos, size_t amt, ByteArray** ba) {
     if (!ba || !*ba) return false;
+    if (pos > (*ba)->size) return false;
     ByteArray* tmp = create_empty_byte_array((*ba)->size + amt);
     if (!tmp) return false;
     memcpy(tmp->buf, (*ba)->buf, pos);
     memset(&tmp->buf[pos], 0, amt);
-    memcpy(&tmp->buf[pos + amt], &(*ba)->buf[pos], (*ba)->size - pos);
+    if (pos < (*ba)->size) memcpy(&tmp->buf[pos + amt], &(*ba)->buf[pos], (*ba)->size - pos);
     cleanup_bytearray(ba);
     *ba = tmp;
     return true;
@@ -15,13 +26,18 @@ bool insert_zeroes(size_t pos, size_t amt, ByteArray** ba) {
 size_t get_file_size(FILE* f) {
     struct stat stats;
     int fd = fileno(f); 
-    fstat(fd, &stats);
+    if (fd == -1) return 0;
+    if (fstat(fd, &stats) == -1) return 0;
     return stats.st_size;
 }
 
 void print_byte_array(ByteArray* ba) {
+    if (!ba) {
+        fprintf(stderr, "argument to print_byte_array is NULL!!!\n");
+        return;
+    }
     for (size_t i = 0; i < ba->size; ++i) {
-        if (!(i % 16)) printf("\n");
+        if (!(i % 16) && i) printf("\n");
         printf("%02X ", ba->buf[i]);
     }
     printf("\n");
@@ -36,9 +52,7 @@ void cleanup_bytearray(ByteArray** ba) {
 ByteArray* clone_byte_array(ByteArray* ba) {
     if (!ba) return NULL;
     ByteArray* ret = create_empty_byte_array(ba->size);
-    if (!ret) {
-        return NULL;
-    }
+    if (!ret) return NULL;
     memcpy(ret->buf, ba->buf, ba->size);
     return ret;
 }
@@ -68,10 +82,13 @@ bool byte_array_to_file(ByteArray* ba, char* filename) {
 
 ByteArray* file_to_byte_array(char* filename) {
     FILE* f = fopen(filename, "rb");
-    if (!f) {
+    if (!f) return NULL;
+    size_t file_size = get_file_size(f);
+    if (!file_size) {
+        fclose(f);
         return NULL;
     }
-    ByteArray* b = create_empty_byte_array(get_file_size(f));
+    ByteArray* b = create_empty_byte_array(file_size);
     if (!b) {
         fclose(f);
         return NULL;
