@@ -97,3 +97,65 @@ ByteArray* file_to_byte_array(char* filename) {
     fclose(f);
     return b;
 }
+
+// general helpers I created while working on something else,
+// thought they would be useful in the library.
+bool put_int32_le(ByteArray* b, int32_t value, unsigned int idx) {
+    if (!b) return false;
+    if (idx + 4 > b->size) return false;
+    for (size_t i = 0; i < 4; ++i) {
+        b->buf[idx + i] = (value >> (i * 8)) & 0xFF;
+    }
+    return true;
+}
+
+bool put_int16_le(ByteArray* b, int16_t value, unsigned int idx) {
+    if (!b) return false;
+    if (idx + 2 > b->size) return false;
+    for (size_t i = 0; i < 2; ++i) {
+        b->buf[idx + i] = (value >> (i * 8)) & 0xFF;
+    }
+    return true;
+}
+
+int32_t get_int32_le(ByteArray* b, unsigned int idx) {
+    if (!b) return -1;
+    if (idx + 4 > b->size) return -1;
+    return b->buf[idx + 3] << 24 | b->buf[idx + 2] << 16 | b->buf[idx + 1] << 8 | b->buf[idx];
+}
+
+int16_t get_int16_le(ByteArray* b, unsigned int idx) {
+    if (!b) return -1;
+    if (idx + 2 > b->size) return -1;
+    return b->buf[idx + 1] << 8 | b->buf[idx];
+}
+
+bool put_int32_be(ByteArray* b, int32_t value, unsigned int idx) {
+    if (!b) return false;
+    if (idx + 4 > b->size) return false;
+    for (size_t i = 0; i < 4; ++i) {
+        b->buf[idx + i] = (value >> 24 - ((i * 8))) & 0xFF;
+    }
+    return true;
+}
+
+bool put_int16_be(ByteArray* b, int16_t value, unsigned int idx) {
+    if (!b) return false;
+    if (idx + 4 > b->size) return false;
+    for (size_t i = 0; i < 2; ++i) {
+        b->buf[idx + i] = (value >> 8 - ((i * 8))) & 0xFF;
+    }
+    return true;
+}
+
+int16_t get_int16_be(ByteArray* b, unsigned int idx) {
+    if (!b) return -1;
+    if (idx + 2 > b->size) return -1;
+    return b->buf[idx] << 8 | b->buf[idx + 1];
+}
+
+int32_t get_int32_be(ByteArray* b, unsigned int idx) {
+    if (!b) return -1;
+    if (idx + 4 > b->size) return -1;
+    return b->buf[idx] << 24 | b->buf[idx + 1] << 16 | b->buf[idx + 2] << 8 | b->buf[idx + 3];
+}

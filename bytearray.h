@@ -31,5 +31,21 @@ bool byte_array_to_file(ByteArray* ba, char* filename);
 
 bool insert_zeroes(size_t pos, size_t amt, ByteArray** ba);
 
+bool put_int32_le(ByteArray* b, int32_t value, unsigned int idx);
+
+bool put_int16_le(ByteArray* b, int16_t value, unsigned int idx);
+
+int32_t get_int32_le(ByteArray* b, unsigned int idx);
+
+int16_t get_int16_le(ByteArray* b, unsigned int idx);
+
+bool put_int32_be(ByteArray* b, int32_t value, unsigned int idx);
+
+bool put_int16_be(ByteArray* b, int16_t value, unsigned int idx);
+
+int32_t get_int32_be(ByteArray* b, unsigned int idx);
+
+int16_t get_int16_be(ByteArray* b, unsigned int idx);
+
 /* -------------------------------------------------------------- */
 
