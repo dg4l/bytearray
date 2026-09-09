@@ -141,7 +141,7 @@ bool put_int32_be(ByteArray* b, int32_t value, unsigned int idx) {
 
 bool put_int16_be(ByteArray* b, int16_t value, unsigned int idx) {
     if (!b) return false;
-    if (idx + 4 > b->size) return false;
+    if (idx + 2 > b->size) return false;
     for (size_t i = 0; i < 2; ++i) {
         b->buf[idx + i] = (value >> 8 - ((i * 8))) & 0xFF;
     }
